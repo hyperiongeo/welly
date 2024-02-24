@@ -67,7 +67,9 @@ class Synthetic(np.ndarray):
 
         stop = stop or getattr(self, 'depth_stop', None)
         data = np.interp(np.arange(params['start'], stop+step, step), self.basis, self)
-        return Curve(data, params=params)
+        new_curve = Curve(data, mnemonic=params['mnemonic'])
+        new_curve.to_basis(start=start or getattr(self, 'depth_start', None), step=step)
+        return new_curve
 
     def plot(self, ax=None, **kwargs):
         """
